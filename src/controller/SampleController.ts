@@ -1,7 +1,14 @@
 export class SampleController {
 
+    constructor() {
 
-    public doSomething(req, res){
+    }
+
+    public doSomething(defautParam) {
+        return defautParam;
+    }
+
+    public doAnotherThing(req) {
         return "oi"
     }
 }

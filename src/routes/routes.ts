@@ -19,6 +19,8 @@ export class Routes {
 
     private sampleControllerRoutes(): void {
         const sampleController = new SampleController()
-        this.router.aplyRoute('', sampleController.doSomething)
+        const controllerPath = 'sample'
+        this.router.aplyGetRoute(controllerPath, 'do-something/:defautParam', sampleController.doSomething)
+        this.router.aplyPostRoute(controllerPath, 'do-another-thing', sampleController.doAnotherThing)
     }
 }
