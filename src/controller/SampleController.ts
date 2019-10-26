@@ -1,14 +1,16 @@
+import { SampleObject } from "./request/SampleObject";
+
 export class SampleController {
 
     constructor() {
 
     }
 
-    public doSomething(defautParam) {
+    public doSomething(defautParam: string) {
         return defautParam;
     }
 
-    public doAnotherThing(req) {
-        return "oi"
+    public doAnotherThing(sampleObject: SampleObject) {
+        return sampleObject
     }
 }

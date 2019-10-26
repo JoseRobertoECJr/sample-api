@@ -9,15 +9,19 @@ export class RouterHelper {
     }
     
     public aplyGetRoute(controllerPath: string, route: string, fn) {
-        this.app.get(`/${controllerPath}/${route}`, (req, res) => this.reply(req, res, fn))
+        this.app.get(`/${controllerPath}/${route}`, (req, res) => this.replyGet(req, res, fn))
     }
 
     public aplyPostRoute(controllerPath: string, route: string, fn) {
-        this.app.post(`/${controllerPath}/${route}`, (req, res) => this.reply(req, res, fn))
+        this.app.post(`/${controllerPath}/${route}`, (req, res) => this.replyPost(req, res, fn))
     }
 
-    public reply(req, res, fn) {
+    public replyGet(req, res, fn) {
         res.send(JSON.stringify(fn(req.params)))
+    }
+
+    public replyPost(req, res, fn) {
+        res.send(JSON.stringify(fn(req.body)))
     }
 
     public aply404Route() {
