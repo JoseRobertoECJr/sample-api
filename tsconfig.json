@@ -5,8 +5,12 @@
         "pretty": true,
         "sourceMap": true,
         "target": "es6",
+        "lib":["es6"],
+        "types": ["reflect-metadata"],
         "outDir": "./dist",
-        "baseUrl": "./src"
+        "baseUrl": "./src",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
     },
     "include": [
         "src/**/*.ts"

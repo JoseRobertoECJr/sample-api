@@ -1,14 +1,33 @@
 import { App } from "./app";
-import { Routes } from "./routes/routes"
 import * as swaggerUi from "swagger-ui-express"
 import { swaggerDocument } from "./routes/swagger"
+import * as bodyParser from 'body-parser';
+ 
+import { Container } from 'inversify';
+import { interfaces, InversifyExpressServer, TYPE } from 'inversify-express-utils';
+ 
+// declare metadata by @controller annotation
+import "./controller/SampleController";
+import { SampleService } from "domain/impl/SampleService";
+import { ISampleService } from "domain/ISampleService";
+ 
+// set up container
+let container = new Container();
 
-const PORT = 3000;
-const app = new App()
+container.bind<App>("App").toSelf();
+container.bind<ISampleService>('SampleService').to(SampleService);
 
-app.app.use('/api/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
-app.app.use('/api', new Routes().appl)
 
-app.http.listen(PORT, () => {
-    console.info("Express server listening on port " + PORT)
-})
+let server = new InversifyExpressServer(container);
+server.setConfig((app) => {
+  app.use(bodyParser.urlencoded({
+    extended: true
+  }));
+  app.use(bodyParser.json());
+});
+ 
+let app = server.build();
+app.use('/api/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+app.listen(3000, () => {
+    console.info("Express server listening on port " + 3000)
+});
