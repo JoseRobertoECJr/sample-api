@@ -1,6 +1,8 @@
 import { ISampleService } from "domain/ISampleService";
-import { Sample } from "domain/entities/Sample"
+import { Sample } from "../entities/Sample"
+import { injectable } from "inversify";
 
+@injectable()
 export class SampleService implements ISampleService {
     
     constructor() {

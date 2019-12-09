@@ -1,25 +1,26 @@
 import { Request, Response, NextFunction } from "express";
-import  {   interfaces, controller, queryParam, request,    requestParam,
+import  {   interfaces, controller, request,    requestParam,
             httpGet,    httpPost,   httpPut,    httpDelete, response } from "inversify-express-utils";
-import { injectable, inject } from "inversify";
+import { inject } from "inversify";
+import { Domain } from '../types'
 import { ISampleService } from "domain/ISampleService";
-import { Sample } from "domain/entities/Sample";
+import { Sample } from "../domain/entities/Sample";
  
 @controller("/sample")
 export class SampleController implements interfaces.Controller {
- 
-    @inject("ISampleService") private sampleService: ISampleService
- 
+
+    @inject(Domain.SampleService) private sampleService: ISampleService
+
     @httpGet("/:id")
     private getBy(@requestParam("id") id: number, req: Request, res: Response, next: NextFunction): Sample {
         return this.sampleService.getBy(id);
     }
- 
+
     @httpGet("/")
-    private getListBy(@queryParam("stringProp") stringProp: string): Array<Sample> {
+    private getListBy(@requestParam("stringProp") stringProp: string): Array<Sample> {
         return this.sampleService.getListBy(stringProp);
     }
- 
+
     @httpPost("/")
     private async create(@request() req: Request, @response() res: Response): Promise<void> {
         try {
@@ -49,4 +50,5 @@ export class SampleController implements interfaces.Controller {
             res.status(400).json({ error: err.message });
         }
     }
+
 }
